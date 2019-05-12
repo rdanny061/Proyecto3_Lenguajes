@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
@@ -16,13 +17,41 @@ public class GameFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     Cuadro[][] botones = new Cuadro[10][10];
+    ArrayList<Cuadro> listaManzanas = new ArrayList();
 
-    public GameFrame(int cantManzanas,int mapa) {
+    public GameFrame(int cantManzanas, int mapa) {
         initComponents();
         cuadros();
         //int mapa = randomNumber(1, 3);
         System.out.println(mapa);
         generarMapa(mapa);
+        colocarManzanas(cantManzanas);
+        verBlocks();
+    }
+
+    public void colocarManzanas(int cantidadManzanas) {
+        for (int fila = 0; fila < 10; fila++) {
+            for (int columna = 0; columna < 10; columna++) {
+                if (botones[fila][columna].tipo == null) {
+                    listaManzanas.add(botones[fila][columna]);
+                }
+            }
+        }
+        while (cantidadManzanas != 0) {
+            int mapa = randomNumber(0, listaManzanas.size() - 1);
+            int x = listaManzanas.get(mapa).x;
+            int y = listaManzanas.get(mapa).y;
+            botones[x][y].setIcon(apple);
+            botones[x][y].tipo = "Apple";
+            listaManzanas.remove(mapa);
+            cantidadManzanas--;
+        }
+    }
+
+    public void verBlocks() {
+        for (int i = 0; i < listaManzanas.size(); i++) {
+            System.out.println(listaManzanas.get(i).x + "," + listaManzanas.get(i).y);
+        }
     }
 
     //creación de matriz logica
