@@ -174,6 +174,9 @@ public class GameFrame extends javax.swing.JFrame {
                 }
             }
         }
+        String t2 = "verConexiones()";
+        Query q2 = new Query(t2);
+        System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
     }
 
     public void colocarManzanas(int cantidadManzanas) {

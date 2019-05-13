@@ -1,4 +1,6 @@
 
-crearConexion(Inicio,Fin):-
+crearConexion(Inicio, Final):-
    dynamic(conexion/2),
-   assert(conexion(Inicio, Fin)).
+   assert(conexion(Inicio, Final)),
+   assert(conexion(Final, Inicio)).
+verConexiones():- listing(conexion).
