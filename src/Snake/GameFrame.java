@@ -494,17 +494,23 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                 System.out.println("x: " + x + " y: " + y);
 
                 botones[x][y].setIcon(snake);
+                cabezaSnake = botones[x][y].nombre;
 
                 if (k + 1 == solucionario.size()) {
-                    JOptionPane.showMessageDialog(rootPane, "Terminado");
+                    xAnterior = -1;
+                    yAnterior = -1;
+                    System.out.println("meta");
                     botones[x][y].tipo = null;
-                    botones[x][y].setIcon(path);
+                    //botones[x][y].setIcon(path);
 
                     for (int i = 0; i < listaManzanas2.size(); i++) {
                         if (listaManzanas2.get(i).x == x && listaManzanas2.get(i).y == y) {
                             listaManzanas2.remove(i);
                         }
                     }
+                    ruta();
+                    hiloPrincipal = new Thread(hilo);
+                    hiloPrincipal.start();
                 }
 
                 xAnterior = x;
@@ -557,6 +563,12 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             }
         }
     };
+
+//    public void refresh() {
+//        this.invalidate();
+//        this.validate();
+//        this.repaint();
+//    }
 
     public void ruta() {
         int random = randomNumber(0, listaManzanas2.size() - 1);
