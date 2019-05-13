@@ -13,10 +13,12 @@ public class Cuadro extends JButton implements ActionListener{
 
     protected int x, y;
     protected String tipo;
+    protected String nombre;
 
     public Cuadro(int posx, int posy, int ancho, int alto, int x, int y) {
         this.x = x;
         this.y = y;
+        this.nombre = x+"-"+y;
         setBounds(posx, posy, ancho, alto);
         Font font1= new Font("Dialog", Font.PLAIN, 22);
         setFont(font1);

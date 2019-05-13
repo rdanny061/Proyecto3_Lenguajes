@@ -1,0 +1,4 @@
+
+crearConexion(Inicio,Fin):-
+   dynamic(conexion/2),
+   assert(conexion(Inicio, Fin)).

@@ -2,6 +2,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
+import org.jpl7.Query;
 
 /**
  *
@@ -25,8 +26,154 @@ public class GameFrame extends javax.swing.JFrame {
         //int mapa = randomNumber(1, 3);
         System.out.println(mapa);
         generarMapa(mapa);
+        conexiones();
         colocarManzanas(cantManzanas);
         verBlocks();
+    }
+
+//    donde se llama al metodo de conexiones para enlazar un boton con sus vecinos
+    //se llama antes de las manzanas
+    public void conexiones() {
+        String t1 = "consult('Snake.pl')";
+        Query q1 = new Query(t1);
+        System.out.println("" + (q1.hasSolution() ? "Conectado" : "No conectado"));
+
+        for (int fila = 0; fila < 10; fila++) {
+            for (int columna = 0; columna < 10; columna++) {
+                if (botones[fila][columna].tipo == null) {
+                    if (fila == 0 && columna == 0) {
+                        if (botones[fila][columna + 1].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna + 1].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila + 1][columna].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila + 1][columna].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                    } else if (fila == 9 && columna == 0) {
+                        if (botones[fila][columna + 1].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna + 1].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila - 1][columna].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila - 1][columna].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                    } else if (fila == 0 && columna == 9) {
+                        if (botones[fila][columna - 1].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna - 1].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila + 1][columna].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila + 1][columna].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                    } else if (fila == 9 && columna == 9) {
+                        if (botones[fila][columna - 1].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna - 1].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila - 1][columna].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila - 1][columna].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                    } else if (columna == 0) {
+                        if (botones[fila + 1][columna].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila + 1][columna].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila - 1][columna].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila - 1][columna].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila][columna + 1].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna + 1].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                    } else if (columna == 9) {
+                        if (botones[fila + 1][columna].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila + 1][columna].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila - 1][columna].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila - 1][columna].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila][columna - 1].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna - 1].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                    } else if (fila == 0) {
+                        if (botones[fila][columna + 1].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna + 1].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila][columna - 1].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna - 1].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila + 1][columna].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila + 1][columna].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                    } else if (fila == 9) {
+                        if (botones[fila][columna + 1].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna + 1].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila][columna - 1].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna - 1].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila - 1][columna].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila - 1][columna].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                    } else {
+                        if (botones[fila][columna + 1].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna + 1].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila][columna - 1].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna - 1].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila - 1][columna].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila - 1][columna].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                        if (botones[fila + 1][columna].tipo == null) {
+                            String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila + 1][columna].nombre + ")";
+                            Query q2 = new Query(t2);
+                            System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void colocarManzanas(int cantidadManzanas) {
