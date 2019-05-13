@@ -1,15 +1,12 @@
+package Snake;
 
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author Danny Rojas Arguedas
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainFrame
-     */
     public MainFrame() {
         initComponents();
         this.setSize(620, 670);
@@ -30,7 +27,7 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("¿Cuántas manzanas desea colocar?");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 217, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 217, -1));
         getContentPane().add(cantManzanas, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 217, -1));
 
         jLabel2.setText("Elija el mapa que desee:");

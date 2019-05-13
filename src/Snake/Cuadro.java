@@ -1,7 +1,13 @@
+package Snake;
+
+import static Snake.GameFrame.snakeVivo;
+import static Snake.GameFrame.snake;
+import static Snake.GameFrame.cabezaSnake;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -9,7 +15,7 @@ import javax.swing.JOptionPane;
  *
  * @author Danny Rojas Arguedas
  */
-public class Cuadro extends JButton implements ActionListener{
+public class Cuadro extends JButton implements ActionListener, Serializable {
 
     protected int x, y;
     protected String tipo;
@@ -18,17 +24,27 @@ public class Cuadro extends JButton implements ActionListener{
     public Cuadro(int posx, int posy, int ancho, int alto, int x, int y) {
         this.x = x;
         this.y = y;
-        this.nombre = x+"-"+y;
+        this.nombre = x + "-" + y;
         setBounds(posx, posy, ancho, alto);
-        Font font1= new Font("Dialog", Font.PLAIN, 22);
+        Font font1 = new Font("Dialog", Font.PLAIN, 22);
         setFont(font1);
         addActionListener(this);
-        
+
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        JOptionPane.showMessageDialog(this, "Hola me precionaste, soy: "+this.x+","+this.y+ " soy un: "+this.tipo);
+        if (snakeVivo == false) {
+            if (this.tipo != "Block") {
+                this.setIcon(snake);
+                JOptionPane.showMessageDialog(this, "(" + this.x + "," + this.y + ")\n Tipo: " + this.tipo);
+                snakeVivo = true;
+                cabezaSnake = this.nombre;
+            }else{
+                JOptionPane.showMessageDialog(this, "Debe colocarlo en un lugar disponible");
+            }
+
+        }
     }
-    
+
 }

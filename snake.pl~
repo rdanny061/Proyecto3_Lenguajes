@@ -1,6 +1,17 @@
+:-dynamic(conexion/2).
 
 crearConexion(Inicio, Final):-
-   dynamic(conexion/2),
-   assert(conexion(Inicio, Final)),
-   assert(conexion(Final, Inicio)).
+   assert(conexion(Inicio, Final)).
+
 verConexiones():- listing(conexion).
+
+ruta(X,X,L,R):-
+   append(L,[X],R).
+
+
+ruta(I,F,RutaAct,LR):-
+   conexion(I,X),
+   not(member(X,RutaAct)),
+   append(RutaAct,[I],L2),
+      ruta(X,F, L2,LR).
+
