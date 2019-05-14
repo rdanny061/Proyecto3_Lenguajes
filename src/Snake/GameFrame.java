@@ -26,7 +26,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
 
     public static String cabezaSnake;
 
-    Cuadro[][] botones = new Cuadro[10][10];
+    Cuadro[][] botones = new Cuadro[6][6];
 
     ArrayList<Cuadro> listaManzanas = new ArrayList();
     ArrayList<Cuadro> listaManzanas2 = new ArrayList(); //lista de los botones donde hay manzanas
@@ -50,8 +50,8 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         Query q1 = new Query(t1);
         System.out.println("" + (q1.hasSolution() ? "Conectado" : "No conectado"));
 
-        for (int fila = 0; fila < 10; fila++) {
-            for (int columna = 0; columna < 10; columna++) {
+        for (int fila = 0; fila < 6; fila++) {
+            for (int columna = 0; columna < 6; columna++) {
                 if (botones[fila][columna].tipo == null) {
                     if (fila == 0 && columna == 0) {
                         if (botones[fila][columna + 1].tipo == null) {
@@ -64,7 +64,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                             Query q2 = new Query(t2);
                             System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
                         }
-                    } else if (fila == 9 && columna == 0) {
+                    } else if (fila == 5 && columna == 0) {
                         if (botones[fila][columna + 1].tipo == null) {
                             String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna + 1].nombre + ")";
                             Query q2 = new Query(t2);
@@ -75,7 +75,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                             Query q2 = new Query(t2);
                             System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
                         }
-                    } else if (fila == 0 && columna == 9) {
+                    } else if (fila == 0 && columna == 5) {
                         if (botones[fila][columna - 1].tipo == null) {
                             String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna - 1].nombre + ")";
                             Query q2 = new Query(t2);
@@ -86,7 +86,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                             Query q2 = new Query(t2);
                             System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
                         }
-                    } else if (fila == 9 && columna == 9) {
+                    } else if (fila == 5 && columna == 5) {
                         if (botones[fila][columna - 1].tipo == null) {
                             String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna - 1].nombre + ")";
                             Query q2 = new Query(t2);
@@ -113,7 +113,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                             Query q2 = new Query(t2);
                             System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
                         }
-                    } else if (columna == 9) {
+                    } else if (columna == 5) {
                         if (botones[fila + 1][columna].tipo == null) {
                             String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila + 1][columna].nombre + ")";
                             Query q2 = new Query(t2);
@@ -145,7 +145,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                             Query q2 = new Query(t2);
                             System.out.println("" + (q2.hasSolution() ? "Insertado" : "No insertado"));
                         }
-                    } else if (fila == 9) {
+                    } else if (fila == 5) {
                         if (botones[fila][columna + 1].tipo == null) {
                             String t2 = "crearConexion(" + botones[fila][columna].nombre + "," + botones[fila][columna + 1].nombre + ")";
                             Query q2 = new Query(t2);
@@ -193,8 +193,8 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
 
     //metodo que coloca las n manzanas en el mapa
     public void colocarManzanas(int cantidadManzanas) {
-        for (int fila = 0; fila < 10; fila++) {
-            for (int columna = 0; columna < 10; columna++) {
+        for (int fila = 0; fila < 6; fila++) {
+            for (int columna = 0; columna < 6; columna++) {
                 if (botones[fila][columna].tipo == null) {
                     listaManzanas.add(botones[fila][columna]);
                 }
@@ -226,9 +226,9 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
 
     //metodo para generar la matriz de botones
     public void cuadros() {
-        for (int fila = 0; fila < 10; fila++) {
-            for (int columna = 0; columna < 10; columna++) {
-                botones[fila][columna] = new Cuadro(50 * columna, 50 * fila, 50, 50, fila, columna);
+        for (int fila = 0; fila < 6; fila++) {
+            for (int columna = 0; columna < 6; columna++) {
+                botones[fila][columna] = new Cuadro(80 * columna, 80 * fila, 80, 80, fila, columna);
                 botones[fila][columna].setIcon(path);
                 //botones[fila][columna].nombre(fila, columna);
                 jPanel1.add(botones[fila][columna]);
@@ -240,228 +240,104 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
     public void generarMapa(int mapa) {
         switch (mapa) {
             case 1:
-                botones[5][0].tipo = "Block";
-                botones[5][0].setIcon(block);
-                botones[6][0].tipo = "Block";
-                botones[6][0].setIcon(block);
-                botones[7][0].tipo = "Block";
-                botones[7][0].setIcon(block);
-                botones[7][1].tipo = "Block";
-                botones[7][1].setIcon(block);
-                botones[7][2].tipo = "Block";
-                botones[7][2].setIcon(block);
-                botones[2][4].tipo = "Block";
-                botones[2][4].setIcon(block);
-                botones[3][4].tipo = "Block";
-                botones[3][4].setIcon(block);
-                botones[4][4].tipo = "Block";
-                botones[4][4].setIcon(block);
-                botones[5][4].tipo = "Block";
-                botones[5][4].setIcon(block);
-                botones[3][3].tipo = "Block";
-                botones[3][3].setIcon(block);
-                botones[3][5].tipo = "Block";
-                botones[3][5].setIcon(block);
-                botones[3][6].tipo = "Block";
-                botones[3][6].setIcon(block);
-                botones[8][6].tipo = "Block";
-                botones[8][6].setIcon(block);
-                botones[8][7].tipo = "Block";
-                botones[8][7].setIcon(block);
-                botones[0][4].tipo = "Block";
-                botones[0][4].setIcon(block);
-                botones[0][5].tipo = "Block";
-                botones[0][5].setIcon(block);
-                botones[1][0].tipo = "Block";
-                botones[1][0].setIcon(block);
-                botones[2][0].tipo = "Block";
-                botones[2][0].setIcon(block);
-                botones[5][6].tipo = "Block";
-                botones[5][6].setIcon(block);
-                botones[1][8].tipo = "Block";
-                botones[1][8].setIcon(block);
-                botones[2][8].tipo = "Block";
-                botones[2][8].setIcon(block);
-                botones[3][8].tipo = "Block";
-                botones[3][8].setIcon(block);
-                botones[4][8].tipo = "Block";
-                botones[4][8].setIcon(block);
-                botones[5][8].tipo = "Block";
-                botones[5][8].setIcon(block);
-                botones[6][8].tipo = "Block";
-                botones[6][8].setIcon(block);
-                break;
-            case 2:
                 botones[0][0].tipo = "Block";
                 botones[0][0].setIcon(block);
                 botones[1][0].tipo = "Block";
                 botones[1][0].setIcon(block);
-                botones[2][0].tipo = "Block";
-                botones[2][0].setIcon(block);
-                botones[3][0].tipo = "Block";
-                botones[3][0].setIcon(block);
-                botones[0][1].tipo = "Block";
-                botones[0][1].setIcon(block);
-                botones[0][2].tipo = "Block";
-                botones[0][2].setIcon(block);
-                botones[0][3].tipo = "Block";
-                botones[0][3].setIcon(block);
-                botones[9][6].tipo = "Block";
-                botones[9][6].setIcon(block);
-                botones[9][7].tipo = "Block";
-                botones[9][7].setIcon(block);
-                botones[9][8].tipo = "Block";
-                botones[9][8].setIcon(block);
-                botones[9][9].tipo = "Block";
-                botones[9][9].setIcon(block);
-                botones[8][9].tipo = "Block";
-                botones[8][9].setIcon(block);
-                botones[7][9].tipo = "Block";
-                botones[7][9].setIcon(block);
-                botones[6][9].tipo = "Block";
-                botones[6][9].setIcon(block);
-                botones[8][0].tipo = "Block";
-                botones[8][0].setIcon(block);
-                botones[9][0].tipo = "Block";
-                botones[9][0].setIcon(block);
-                botones[9][1].tipo = "Block";
-                botones[9][1].setIcon(block);
-                botones[0][8].tipo = "Block";
-                botones[0][8].setIcon(block);
-                botones[0][9].tipo = "Block";
-                botones[0][9].setIcon(block);
-                botones[1][9].tipo = "Block";
-                botones[1][9].setIcon(block);
-                botones[3][7].tipo = "Block";
-                botones[3][7].setIcon(block);
-                botones[4][7].tipo = "Block";
-                botones[4][7].setIcon(block);
-                botones[5][7].tipo = "Block";
-                botones[5][7].setIcon(block);
-                botones[6][7].tipo = "Block";
-                botones[6][7].setIcon(block);
-                botones[7][7].tipo = "Block";
-                botones[7][7].setIcon(block);
-                botones[3][2].tipo = "Block";
-                botones[3][2].setIcon(block);
-                botones[4][2].tipo = "Block";
-                botones[4][2].setIcon(block);
-                botones[5][2].tipo = "Block";
-                botones[5][2].setIcon(block);
-                botones[6][2].tipo = "Block";
-                botones[6][2].setIcon(block);
-                botones[7][2].tipo = "Block";
-                botones[7][2].setIcon(block);
-                botones[7][3].tipo = "Block";
-                botones[7][3].setIcon(block);
-                botones[7][4].tipo = "Block";
-                botones[7][4].setIcon(block);
-                botones[7][5].tipo = "Block";
-                botones[7][5].setIcon(block);
-                botones[7][6].tipo = "Block";
-                botones[7][6].setIcon(block);
-                botones[3][3].tipo = "Block";
-                botones[3][3].setIcon(block);
-                botones[3][6].tipo = "Block";
-                botones[3][6].setIcon(block);
-                break;
-            case 3:
-                botones[0][0].tipo = "Block";
-                botones[0][0].setIcon(block);
-                botones[0][4].tipo = "Block";
-                botones[0][4].setIcon(block);
-                botones[0][5].tipo = "Block";
-                botones[0][5].setIcon(block);
-                botones[0][9].tipo = "Block";
-                botones[0][9].setIcon(block);
+                botones[1][2].tipo = "Block";
+                botones[1][2].setIcon(block);
+                botones[1][4].tipo = "Block";
+                botones[1][4].setIcon(block);
+                botones[1][5].tipo = "Block";
+                botones[1][5].setIcon(block);
                 botones[2][2].tipo = "Block";
                 botones[2][2].setIcon(block);
-                botones[2][3].tipo = "Block";
-                botones[2][3].setIcon(block);
-                botones[2][4].tipo = "Block";
-                botones[2][4].setIcon(block);
                 botones[2][5].tipo = "Block";
                 botones[2][5].setIcon(block);
-                botones[2][6].tipo = "Block";
-                botones[2][6].setIcon(block);
-                botones[2][7].tipo = "Block";
-                botones[2][7].setIcon(block);
+                botones[3][0].tipo = "Block";
+                botones[3][0].setIcon(block);
                 botones[3][2].tipo = "Block";
                 botones[3][2].setIcon(block);
-                botones[3][3].tipo = "Block";
-                botones[3][3].setIcon(block);
-                botones[3][4].tipo = "Block";
-                botones[3][4].setIcon(block);
-                botones[3][5].tipo = "Block";
-                botones[3][5].setIcon(block);
-                botones[3][6].tipo = "Block";
-                botones[3][6].setIcon(block);
-                botones[3][7].tipo = "Block";
-                botones[3][7].setIcon(block);
                 botones[4][0].tipo = "Block";
                 botones[4][0].setIcon(block);
                 botones[4][2].tipo = "Block";
                 botones[4][2].setIcon(block);
-                botones[4][3].tipo = "Block";
-                botones[4][3].setIcon(block);
                 botones[4][4].tipo = "Block";
                 botones[4][4].setIcon(block);
+                botones[5][4].tipo = "Block";
+                botones[5][4].setIcon(block);
+                break;
+            case 2:
+                botones[0][0].tipo = "Block";
+                botones[0][0].setIcon(block);
+                botones[0][1].tipo = "Block";
+                botones[0][1].setIcon(block);
+                botones[0][2].tipo = "Block";
+                botones[0][2].setIcon(block);
+                botones[0][4].tipo = "Block";
+                botones[0][4].setIcon(block);
+                botones[0][5].tipo = "Block";
+                botones[0][5].setIcon(block);
+                botones[1][0].tipo = "Block";
+                botones[1][0].setIcon(block);
+                botones[1][5].tipo = "Block";
+                botones[1][5].setIcon(block);
+                botones[2][0].tipo = "Block";
+                botones[2][0].setIcon(block);
+                botones[2][2].tipo = "Block";
+                botones[2][2].setIcon(block);
+                botones[3][3].tipo = "Block";
+                botones[3][3].setIcon(block);
+                botones[3][5].tipo = "Block";
+                botones[3][5].setIcon(block);
+                botones[4][0].tipo = "Block";
+                botones[4][0].setIcon(block);
                 botones[4][5].tipo = "Block";
                 botones[4][5].setIcon(block);
-                botones[4][6].tipo = "Block";
-                botones[4][6].setIcon(block);
-                botones[4][7].tipo = "Block";
-                botones[4][7].setIcon(block);
-                botones[4][9].tipo = "Block";
-                botones[4][9].setIcon(block);
                 botones[5][0].tipo = "Block";
                 botones[5][0].setIcon(block);
-                botones[5][2].tipo = "Block";
-                botones[5][2].setIcon(block);
+                botones[5][1].tipo = "Block";
+                botones[5][1].setIcon(block);
                 botones[5][3].tipo = "Block";
                 botones[5][3].setIcon(block);
                 botones[5][4].tipo = "Block";
                 botones[5][4].setIcon(block);
                 botones[5][5].tipo = "Block";
                 botones[5][5].setIcon(block);
-                botones[5][6].tipo = "Block";
-                botones[5][6].setIcon(block);
-                botones[5][7].tipo = "Block";
-                botones[5][7].setIcon(block);
-                botones[5][9].tipo = "Block";
-                botones[5][9].setIcon(block);
-                botones[6][2].tipo = "Block";
-                botones[6][2].setIcon(block);
-                botones[6][3].tipo = "Block";
-                botones[6][3].setIcon(block);
-                botones[6][4].tipo = "Block";
-                botones[6][4].setIcon(block);
-                botones[6][5].tipo = "Block";
-                botones[6][5].setIcon(block);
-                botones[6][6].tipo = "Block";
-                botones[6][6].setIcon(block);
-                botones[6][7].tipo = "Block";
-                botones[6][7].setIcon(block);
-                botones[7][2].tipo = "Block";
-                botones[7][2].setIcon(block);
-                botones[7][3].tipo = "Block";
-                botones[7][3].setIcon(block);
-                botones[7][4].tipo = "Block";
-                botones[7][4].setIcon(block);
-                botones[7][5].tipo = "Block";
-                botones[7][5].setIcon(block);
-                botones[7][6].tipo = "Block";
-                botones[7][6].setIcon(block);
-                botones[7][7].tipo = "Block";
-                botones[7][7].setIcon(block);
-                botones[9][0].tipo = "Block";
-                botones[9][0].setIcon(block);
-                botones[9][4].tipo = "Block";
-                botones[9][4].setIcon(block);
-                botones[9][5].tipo = "Block";
-                botones[9][5].setIcon(block);
-                botones[9][9].tipo = "Block";
-                botones[9][9].setIcon(block);
+                break;
+            case 3:
+                botones[0][0].tipo = "Block";
+                botones[0][0].setIcon(block);
+                botones[0][2].tipo = "Block";
+                botones[0][2].setIcon(block);
+                botones[0][3].tipo = "Block";
+                botones[0][3].setIcon(block);
+                botones[0][5].tipo = "Block";
+                botones[0][5].setIcon(block);
+                botones[2][0].tipo = "Block";
+                botones[2][0].setIcon(block);
+                botones[2][2].tipo = "Block";
+                botones[2][2].setIcon(block);
+                botones[2][3].tipo = "Block";
+                botones[2][3].setIcon(block);
+                botones[2][5].tipo = "Block";
+                botones[2][5].setIcon(block);
+                botones[3][0].tipo = "Block";
+                botones[3][0].setIcon(block);
+                botones[3][2].tipo = "Block";
+                botones[3][2].setIcon(block);
+                botones[3][3].tipo = "Block";
+                botones[3][3].setIcon(block);
+                botones[3][5].tipo = "Block";
+                botones[3][5].setIcon(block);
+                botones[5][0].tipo = "Block";
+                botones[5][0].setIcon(block);
+                botones[5][2].tipo = "Block";
+                botones[5][2].setIcon(block);
+                botones[5][3].tipo = "Block";
+                botones[5][3].setIcon(block);
+                botones[5][5].tipo = "Block";
+                botones[5][5].setIcon(block);
                 break;
             default:
                 break;
@@ -569,8 +445,8 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
 //        this.validate();
 //        this.repaint();
 //    }
-
     public void ruta() {
+        solucionario.clear();
         int random = randomNumber(0, listaManzanas2.size() - 1);
         String manzana = listaManzanas2.get(random).nombre;
         System.out.println("cabezaSnake: " + cabezaSnake);
@@ -581,6 +457,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         String t2 = "respuesta(" + cabezaSnake + "," + manzana + ",X)";
         Query q2 = new Query(t2);
         Map<String, Term>[] solutions = q2.allSolutions();
+
         for (int i = 0; i < solutions.length; i++) {
             Term term = solutions[i].get("X");
             for (Term oneTerm : term.toTermArray()) {
@@ -603,7 +480,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 504, Short.MAX_VALUE)
+            .addGap(0, 483, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -622,22 +499,23 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(215, 215, 215)
+                        .addComponent(jButton1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(223, 223, 223))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -654,41 +532,6 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(GameFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(GameFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(GameFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(GameFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new GameFrame().setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
