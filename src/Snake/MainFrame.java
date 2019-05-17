@@ -66,7 +66,7 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
             try {
                 int manzanas = Integer.parseInt(cantManzanas.getText());
-                if (manzanas > 52) {
+                if (manzanas > 20) {
                     JOptionPane.showMessageDialog(this, "No puedes colocar más manzanas que los espacios que hay disponibles!");
                 } else {
                     GameFrame newFrame = new GameFrame(manzanas, 3);
@@ -87,7 +87,7 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
             try {
                 int manzanas = Integer.parseInt(cantManzanas.getText());
-                if (manzanas > 64) {
+                if (manzanas > 18) {
                     JOptionPane.showMessageDialog(this, "No puedes colocar más manzanas que los espacios que hay disponibles!");
                 } else {
                     GameFrame newFrame = new GameFrame(manzanas, 2);
@@ -107,7 +107,7 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
             try {
                 int manzanas = Integer.parseInt(cantManzanas.getText());
-                if (manzanas > 75) {
+                if (manzanas > 23) {
                     JOptionPane.showMessageDialog(this, "No puedes colocar más manzanas que los espacios que hay disponibles!");
                 } else {
                     GameFrame newFrame = new GameFrame(manzanas, 1);

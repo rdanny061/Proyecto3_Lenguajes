@@ -1,6 +1,7 @@
 package Snake;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -25,23 +26,26 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
     public static boolean snakeVivo = false;
 
     public static String cabezaSnake;
+    public static String colaSnake;
 
-    Cuadro[][] botones = new Cuadro[6][6];
+    int cantidadManzanasComidas = 0;
+
+    public static Cuadro[][] botones = new Cuadro[6][6];
 
     ArrayList<Cuadro> listaManzanas = new ArrayList();
     ArrayList<Cuadro> listaManzanas2 = new ArrayList(); //lista de los botones donde hay manzanas
+    public static ArrayList<Cuadro> listaPocisionesCulebra = new ArrayList();
 
     List<String> solucionario = new ArrayList<>();
 
     public GameFrame(int cantManzanas, int mapa) {
         initComponents();
         cuadros();
-        //int mapa = randomNumber(1, 3);
         System.out.println(mapa);
         generarMapa(mapa);
         conexiones();
         colocarManzanas(cantManzanas);
-        verBlocks();
+        //verBlocks();
     }
 
     //metodo que realiza las conexiones
@@ -345,108 +349,87 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
     }
 
     Runnable hilo = new Runnable() {
+        @Override
         public void run() {
             //Boolean bandera = false;
+            while (listaManzanas2.size() > 0) {
+                ruta();
+                int xAnterior = -1;
+                int yAnterior = -1;
 
-            int xAnterior = -1;
-            int yAnterior = -1;
-
-            for (int k = 0; k < solucionario.size(); k++) {
-                if (xAnterior != -1 && yAnterior != -1) {
-                    if (botones[xAnterior][yAnterior].tipo == null) {
-                        botones[xAnterior][yAnterior].setIcon(path);
-                    } else if ("Apple".equals(botones[xAnterior][yAnterior].tipo)) {
-                        botones[xAnterior][yAnterior].setIcon(apple);
-                    }
-                }
-
-                String[] parts = solucionario.get(k).split(",");
-                String xtemp = parts[0];
-                String ytemp = parts[1];
-
-                int x = Integer.parseInt("" + xtemp.charAt(4));
-                int y = Integer.parseInt("" + ytemp.charAt(1));
-
-                System.out.println("x: " + x + " y: " + y);
-
-                botones[x][y].setIcon(snake);
-                cabezaSnake = botones[x][y].nombre;
-
-                if (k + 1 == solucionario.size()) {
-                    xAnterior = -1;
-                    yAnterior = -1;
-                    System.out.println("meta");
-                    botones[x][y].tipo = null;
-                    //botones[x][y].setIcon(path);
-
-                    for (int i = 0; i < listaManzanas2.size(); i++) {
-                        if (listaManzanas2.get(i).x == x && listaManzanas2.get(i).y == y) {
-                            listaManzanas2.remove(i);
+                for (int k = 0; k < solucionario.size(); k++) {
+                    if (xAnterior != -1 && yAnterior != -1) {
+                        if (botones[xAnterior][yAnterior].tipo == null) {
+                            botones[xAnterior][yAnterior].setIcon(path);
+                            botones[xAnterior][yAnterior].repaint();
+                        } else if ("Apple".equals(botones[xAnterior][yAnterior].tipo)) {
+                            botones[xAnterior][yAnterior].setIcon(apple);
+//                            for (int i = 0; i < listaManzanas2.size(); i++) {
+//                                if (listaManzanas2.get(i).x == xAnterior && listaManzanas2.get(i).y == yAnterior) {
+//                                    cantidadManzanasComidas++;
+//                                    listaManzanas2.remove(i);
+//                                }
+//                            }
                         }
                     }
-                    ruta();
-                    hiloPrincipal = new Thread(hilo);
-                    hiloPrincipal.start();
-                }
 
-                xAnterior = x;
-                yAnterior = y;
-//                if (bandera == false) {
-//                    for (int fila = 0; fila < 10; fila++) {
-//                        for (int columna = 0; columna < 10; columna++) {
-//                            if (botones[fila][columna].getName().equals(solucionario.get(k))) {
-//                                botones[fila][columna].setIcon(path);
-//                                break;
-//                            }
-//                        }
-//                    }
-//                    for (int fila = 0; fila < 10; fila++) {
-//                        for (int columna = 0; columna < 10; columna++) {
-//                            if ((k + 1) != (solucionario.size() - 1)) {
-//                                if (botones[fila][columna].getName().equals(solucionario.get(k + 1))) {
-//                                    botones[fila][columna].setIcon(snake);
-//                                }
-//                            } else if ((k + 1) == (solucionario.size() - 1)) {
-//                                if (botones[fila][columna].getName().equals(solucionario.get(k + 1))) {
-//                                    botones[fila][columna].setIcon(snake);
-//                                    bandera = true;
-//                                }
-//                            }
-//                        }
-//                    }
-//                } else if (bandera == true) {
-//                    JOptionPane.showMessageDialog(null, "El perro ha atrapado al gato");
-//                    for (int fila = 0; fila < 10; fila++) {
-//                        for (int columna = 0; columna < 10; columna++) {
-//                            botones[fila][columna].setIcon(path);
-//                        }
-//                    }
-//                    solucionario.clear();
-////                    listaConexiones.clear();
-////                    contador = 0;
-////                    jButton4.setEnabled(false);
-////                    jButton5.setEnabled(false);
-//                    jButton1.setEnabled(true);
-//                }
-                try {
-                    Thread.sleep(1500);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-//                refresh();
+                    String[] parts = solucionario.get(k).split(",");
+                    int x = Integer.parseInt("" + parts[0].charAt(4));
+                    int y = Integer.parseInt("" + parts[1].charAt(1));
 
+                    System.out.println("x: " + x + " y: " + y);
+
+                    listaPocisionesCulebra.add(botones[x][y]);
+                    
+                    //intento de dibujar cuerpo de culebra
+//                    Collections.reverse(listaPocisionesCulebra);
+//                    for (int i = 0; i < cantidadManzanasComidas; i++) {
+//                        botones[listaPocisionesCulebra.get(i).x][listaPocisionesCulebra.get(i).y].setIcon(snake);
+//                    }
+//                    Collections.reverse(listaPocisionesCulebra);
+
+                    botones[x][y].setIcon(snake);
+                    cabezaSnake = botones[x][y].nombre;
+                    //colaSnake = cabezaSnake;
+//                    if (cantidadManzanasComidas != 0) {
+//                        colaSnake = listaPocisionesCulebra.get(cantidadManzanasComidas - 1).nombre;
+//                    }
+
+                    if (k + 1 == solucionario.size()) {
+                        xAnterior = -1;
+                        yAnterior = -1;
+                        System.out.println("meta");
+                        botones[x][y].tipo = null; //deja de ser manzana
+
+                        for (int i = 0; i < listaManzanas2.size(); i++) {
+                            if (listaManzanas2.get(i).x == x && listaManzanas2.get(i).y == y) {
+                                listaManzanas2.remove(i);
+                                cantidadManzanasComidas++;
+                                //hiloPrincipal.stop();
+                            }
+                        }
+
+                        solucionario.clear();
+                        //ruta();
+                        //hiloPrincipal = new Thread(hilo);
+                        //hiloPrincipal.start();
+                    }
+                        xAnterior = x;
+                        yAnterior = y;
+                     
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        //e.printStackTrace();
+                    }
+                }
             }
+            JOptionPane.showMessageDialog(rootPane, "Juego terminado");
+            hiloPrincipal.stop();
         }
     };
 
-//    public void refresh() {
-//        this.invalidate();
-//        this.validate();
-//        this.repaint();
-//    }
     public void ruta() {
-        solucionario.clear();
         int random = randomNumber(0, listaManzanas2.size() - 1);
         String manzana = listaManzanas2.get(random).nombre;
         System.out.println("cabezaSnake: " + cabezaSnake);
@@ -472,7 +455,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        startButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -487,10 +470,10 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             .addGap(0, 499, Short.MAX_VALUE)
         );
 
-        jButton1.setText("Iniciar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        startButton.setText("Iniciar");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                startButtonActionPerformed(evt);
             }
         });
 
@@ -505,7 +488,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(215, 215, 215)
-                        .addComponent(jButton1)))
+                        .addComponent(startButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -514,32 +497,31 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(startButton)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         if (snakeVivo == true) {
-            ruta();
             hiloPrincipal = new Thread(hilo);
+            startButton.setEnabled(false);
             hiloPrincipal.start();
         } else {
             JOptionPane.showMessageDialog(this, "Seleccione donde pone la culebra.");
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_startButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

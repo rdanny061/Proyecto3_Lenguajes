@@ -3,6 +3,9 @@ package Snake;
 import static Snake.GameFrame.snakeVivo;
 import static Snake.GameFrame.snake;
 import static Snake.GameFrame.cabezaSnake;
+import static Snake.GameFrame.colaSnake;
+import static Snake.GameFrame.listaPocisionesCulebra;
+import static Snake.GameFrame.botones;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -35,12 +38,14 @@ public class Cuadro extends JButton implements ActionListener, Serializable {
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (snakeVivo == false) {
-            if (this.tipo != "Block") {
+            if (!"Block".equals(this.tipo)) {
                 this.setIcon(snake);
                 JOptionPane.showMessageDialog(this, "(" + this.x + "," + this.y + ")\n Tipo: " + this.tipo);
                 snakeVivo = true;
                 cabezaSnake = this.nombre;
-            }else{
+                colaSnake = this.nombre;
+                listaPocisionesCulebra.add(botones[this.x][this.y]);
+            } else {
                 JOptionPane.showMessageDialog(this, "Debe colocarlo en un lugar disponible");
             }
 
