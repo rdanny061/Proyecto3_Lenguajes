@@ -38,13 +38,16 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
 
     List<String> solucionario = new ArrayList<>();
 
-    public GameFrame(int cantManzanas, int mapa) {
+    int cantManzanas; //cantidad de manzanas solicitadas por el usuario
+
+    public GameFrame(int cantManzanas2, int mapa) {
         initComponents();
         cuadros();
         System.out.println(mapa);
         generarMapa(mapa);
         conexiones();
-        colocarManzanas(cantManzanas);
+        cantManzanas = cantManzanas2;
+        colocarManzanas();
         //verBlocks();
     }
 
@@ -196,7 +199,8 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
     }
 
     //metodo que coloca las n manzanas en el mapa
-    public void colocarManzanas(int cantidadManzanas) {
+    public void colocarManzanas() {
+        System.out.println("Manzs: " + cantManzanas);
         for (int fila = 0; fila < 6; fila++) {
             for (int columna = 0; columna < 6; columna++) {
                 if (botones[fila][columna].tipo == null) {
@@ -204,7 +208,8 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                 }
             }
         }
-        while (cantidadManzanas != 0) {
+//        while (cantidadManzanas != 0) {
+        if (cantManzanas > 0) {
             int mapa = randomNumber(0, listaManzanas.size() - 1);
             int x = listaManzanas.get(mapa).x;
             int y = listaManzanas.get(mapa).y;
@@ -212,8 +217,11 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             botones[x][y].setIcon(apple);
             botones[x][y].tipo = "Apple";
             listaManzanas.remove(mapa);
-            cantidadManzanas--;
+            cantManzanas--;
         }
+        listaManzanas.clear();
+
+//        }
     }
 
     public void verBlocks() {
@@ -358,20 +366,20 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                 int yAnterior = -1;
 
                 for (int k = 0; k < solucionario.size(); k++) {
-                    if (xAnterior != -1 && yAnterior != -1) {
-                        if (botones[xAnterior][yAnterior].tipo == null) {
-                            botones[xAnterior][yAnterior].setIcon(path);
-                            botones[xAnterior][yAnterior].repaint();
-                        } else if ("Apple".equals(botones[xAnterior][yAnterior].tipo)) {
-                            botones[xAnterior][yAnterior].setIcon(apple);
-//                            for (int i = 0; i < listaManzanas2.size(); i++) {
-//                                if (listaManzanas2.get(i).x == xAnterior && listaManzanas2.get(i).y == yAnterior) {
-//                                    cantidadManzanasComidas++;
-//                                    listaManzanas2.remove(i);
-//                                }
-//                            }
-                        }
-                    }
+//                    if (xAnterior != -1 && yAnterior != -1) {
+//                        if (botones[xAnterior][yAnterior].tipo == null) {
+//                            botones[xAnterior][yAnterior].setIcon(path);
+//                            botones[xAnterior][yAnterior].repaint();
+//                        } else if ("Apple".equals(botones[xAnterior][yAnterior].tipo)) {
+//                            botones[xAnterior][yAnterior].setIcon(apple);
+////                            for (int i = 0; i < listaManzanas2.size(); i++) {
+////                                if (listaManzanas2.get(i).x == xAnterior && listaManzanas2.get(i).y == yAnterior) {
+////                                    cantidadManzanasComidas++;
+////                                    listaManzanas2.remove(i);
+////                                }
+////                            }
+//                        }
+//                    }
 
                     String[] parts = solucionario.get(k).split(",");
                     int x = Integer.parseInt("" + parts[0].charAt(4));
@@ -380,15 +388,15 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                     System.out.println("x: " + x + " y: " + y);
 
                     listaPocisionesCulebra.add(botones[x][y]);
-                    
+                    pintarCuerpoCulebra();
+
                     //intento de dibujar cuerpo de culebra
 //                    Collections.reverse(listaPocisionesCulebra);
 //                    for (int i = 0; i < cantidadManzanasComidas; i++) {
 //                        botones[listaPocisionesCulebra.get(i).x][listaPocisionesCulebra.get(i).y].setIcon(snake);
 //                    }
 //                    Collections.reverse(listaPocisionesCulebra);
-
-                    botones[x][y].setIcon(snake);
+                    //botones[x][y].setIcon(snake);
                     cabezaSnake = botones[x][y].nombre;
                     //colaSnake = cabezaSnake;
 //                    if (cantidadManzanasComidas != 0) {
@@ -409,16 +417,17 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                             }
                         }
 
+                        colocarManzanas();
                         solucionario.clear();
                         //ruta();
                         //hiloPrincipal = new Thread(hilo);
                         //hiloPrincipal.start();
                     }
-                        xAnterior = x;
-                        yAnterior = y;
-                     
+                    xAnterior = x;
+                    yAnterior = y;
+
                     try {
-                        Thread.sleep(3000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         //e.printStackTrace();
                     }
@@ -428,6 +437,23 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             hiloPrincipal.stop();
         }
     };
+
+    public void pintarCuerpoCulebra() {
+
+        for (int fila = 0; fila < 6; fila++) {
+            for (int columna = 0; columna < 6; columna++) {
+                if (!"Block".equals(botones[fila][columna].tipo) && !"Apple".equals(botones[fila][columna].tipo)) {
+                    botones[fila][columna].setIcon(path);
+                }
+            }
+        }
+        Collections.reverse(listaPocisionesCulebra);
+        for (int i = 0; i <= cantidadManzanasComidas; i++) {
+            botones[listaPocisionesCulebra.get(i).x][listaPocisionesCulebra.get(i).y].setIcon(snake);
+        }
+        Collections.reverse(listaPocisionesCulebra);
+
+    }
 
     public void ruta() {
         int random = randomNumber(0, listaManzanas2.size() - 1);
