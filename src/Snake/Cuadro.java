@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author Danny Rojas Arguedas
  */
+
 public class Cuadro extends JButton implements ActionListener, Serializable {
 
     protected int x, y;
@@ -32,7 +33,6 @@ public class Cuadro extends JButton implements ActionListener, Serializable {
         Font font1 = new Font("Dialog", Font.PLAIN, 22);
         setFont(font1);
         addActionListener(this);
-
     }
 
     @Override
@@ -48,7 +48,6 @@ public class Cuadro extends JButton implements ActionListener, Serializable {
             } else {
                 JOptionPane.showMessageDialog(this, "Debe colocarlo en un lugar disponible");
             }
-
         }
     }
 

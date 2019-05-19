@@ -220,7 +220,6 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             cantManzanas--;
         }
         listaManzanas.clear();
-
 //        }
     }
 
@@ -366,21 +365,6 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                 int yAnterior = -1;
 
                 for (int k = 0; k < solucionario.size(); k++) {
-//                    if (xAnterior != -1 && yAnterior != -1) {
-//                        if (botones[xAnterior][yAnterior].tipo == null) {
-//                            botones[xAnterior][yAnterior].setIcon(path);
-//                            botones[xAnterior][yAnterior].repaint();
-//                        } else if ("Apple".equals(botones[xAnterior][yAnterior].tipo)) {
-//                            botones[xAnterior][yAnterior].setIcon(apple);
-////                            for (int i = 0; i < listaManzanas2.size(); i++) {
-////                                if (listaManzanas2.get(i).x == xAnterior && listaManzanas2.get(i).y == yAnterior) {
-////                                    cantidadManzanasComidas++;
-////                                    listaManzanas2.remove(i);
-////                                }
-////                            }
-//                        }
-//                    }
-
                     String[] parts = solucionario.get(k).split(",");
                     int x = Integer.parseInt("" + parts[0].charAt(4));
                     int y = Integer.parseInt("" + parts[1].charAt(1));
@@ -390,19 +374,8 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                     listaPocisionesCulebra.add(botones[x][y]);
                     pintarCuerpoCulebra();
 
-                    //intento de dibujar cuerpo de culebra
-//                    Collections.reverse(listaPocisionesCulebra);
-//                    for (int i = 0; i < cantidadManzanasComidas; i++) {
-//                        botones[listaPocisionesCulebra.get(i).x][listaPocisionesCulebra.get(i).y].setIcon(snake);
-//                    }
-//                    Collections.reverse(listaPocisionesCulebra);
-                    //botones[x][y].setIcon(snake);
                     cabezaSnake = botones[x][y].nombre;
-                    //colaSnake = cabezaSnake;
-//                    if (cantidadManzanasComidas != 0) {
-//                        colaSnake = listaPocisionesCulebra.get(cantidadManzanasComidas - 1).nombre;
-//                    }
-
+                    
                     if (k + 1 == solucionario.size()) {
                         xAnterior = -1;
                         yAnterior = -1;
@@ -416,12 +389,8 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                                 //hiloPrincipal.stop();
                             }
                         }
-
                         colocarManzanas();
                         solucionario.clear();
-                        //ruta();
-                        //hiloPrincipal = new Thread(hilo);
-                        //hiloPrincipal.start();
                     }
                     xAnterior = x;
                     yAnterior = y;
@@ -452,7 +421,6 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             botones[listaPocisionesCulebra.get(i).x][listaPocisionesCulebra.get(i).y].setIcon(snake);
         }
         Collections.reverse(listaPocisionesCulebra);
-
     }
 
     public void ruta() {
@@ -538,9 +506,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         } else {
             JOptionPane.showMessageDialog(this, "Seleccione donde pone la culebra.");
         }
-
     }//GEN-LAST:event_startButtonActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
