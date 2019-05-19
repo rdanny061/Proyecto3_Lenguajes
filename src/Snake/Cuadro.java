@@ -47,7 +47,7 @@ public class Cuadro extends JButton implements ActionListener, Serializable {
                 colaSnake = this.nombre;
                 listaPocisionesCulebra.add(botones[this.x][this.y]);
             } else {
-                JOptionPane.showMessageDialog(this, "Debe colocarlo en un lugar disponible");
+                JOptionPane.showMessageDialog(this, "Debe colocarlo en un lugar disponible.");
             }
         }
     }

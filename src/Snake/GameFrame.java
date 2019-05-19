@@ -13,6 +13,7 @@ import org.jpl7.Term;
  *
  * @author Danny Rojas Arguedas
  */
+
 public class GameFrame extends javax.swing.JFrame implements Runnable {
 
     public static ImageIcon block = new ImageIcon("src\\Images\\block.png");
@@ -48,6 +49,8 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         cantManzanas = cantManzanas2;
         colocarManzanas();
         manzanasComidasLabel.setText("" + cantidadManzanasComidas);
+        JOptionPane.showMessageDialog(this, "Coloque la cabeza de la culebra en un espacio disponible.");
+
     }
 
     //metodo que realiza las conexiones
@@ -218,10 +221,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             }
             Collections.reverse(listaPocisionesCulebra);
 
-            System.out.println("tamanno culebra: " + listaPocisionesCuerpoCulebra.size());
-
             for (Cuadro cuadro : listaPocisionesCuerpoCulebra) {
-                System.out.println("tamano lista manzanas" + listaManzanas.size());
                 for (Cuadro cuadro2 : listaManzanas) {
                     if (cuadro.x == cuadro2.x && cuadro.y == cuadro2.y) {
                         listaManzanas.remove(cuadro2);
@@ -443,11 +443,12 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                 }
             }
         }
+
         ArrayList<Cuadro> listaPocisionesCuerpoCulebra = new ArrayList();
+
         Collections.reverse(listaPocisionesCulebra);
         for (int i = 0; i <= cantidadManzanasComidas; i++) {
             listaPocisionesCuerpoCulebra.add(listaPocisionesCulebra.get(i));
-            //botones[listaPocisionesCulebra.get(i).x][listaPocisionesCulebra.get(i).y].setIcon(snake);
         }
         Collections.reverse(listaPocisionesCulebra);
 
@@ -461,7 +462,6 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             }
         }
         Collections.reverse(listaPocisionesCuerpoCulebra);
-
     }
 
     public void ruta() {
@@ -479,7 +479,6 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         for (int i = 0; i < solutions.length; i++) {
             Term term = solutions[i].get("X");
             for (Term oneTerm : term.toTermArray()) {
-                System.out.println("en Ruta: " + oneTerm.toString());
                 soluciones.add(oneTerm.toString());
             }
         }
@@ -596,7 +595,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             startButton.setEnabled(false);
             hiloPrincipal.start();
         } else {
-            JOptionPane.showMessageDialog(this, "Seleccione donde pone la culebra.");
+            JOptionPane.showMessageDialog(this, "Debe colocar la cabeza de la culebra antes de iniciar...");
         }
     }//GEN-LAST:event_startButtonActionPerformed
 
