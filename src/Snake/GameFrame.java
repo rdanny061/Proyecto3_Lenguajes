@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.jpl7.Query;
@@ -50,7 +46,6 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         conexiones();
         cantManzanas = cantManzanas2;
         colocarManzanas();
-        //verBlocks();
         manzanasComidasLabel.setText("" + cantidadManzanasComidas);
     }
 
@@ -203,7 +198,6 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
 
     //metodo que coloca las n manzanas en el mapa
     public void colocarManzanas() {
-        System.out.println("Manzs: " + cantManzanas);
         manzanasFaltantesLabel.setText("" + cantManzanas);
         for (int fila = 0; fila < 6; fila++) {
             for (int columna = 0; columna < 6; columna++) {
@@ -212,6 +206,30 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                 }
             }
         }
+        
+        ArrayList<Cuadro> listaPocisionesCuerpoCulebra;
+
+        if (!listaPocisionesCulebra.isEmpty()) { //esto hará que la manzana no caiga encima del cuerpo de la culebra
+            listaPocisionesCuerpoCulebra = new ArrayList();
+            Collections.reverse(listaPocisionesCulebra);
+            for (int i = 0; i <= cantidadManzanasComidas; i++) {
+                listaPocisionesCuerpoCulebra.add(listaPocisionesCulebra.get(i));
+            }
+            Collections.reverse(listaPocisionesCulebra);
+
+            System.out.println("tamanno culebra: " + listaPocisionesCuerpoCulebra.size());
+
+            for (Cuadro cuadro : listaPocisionesCuerpoCulebra) {
+                System.out.println("tamano lista manzanas" + listaManzanas.size());
+                for (Cuadro cuadro2 : listaManzanas) {
+                    if (cuadro.x == cuadro2.x && cuadro.y == cuadro2.y) {
+                        listaManzanas.remove(cuadro2);
+                        break;
+                    }
+                }
+            }
+        }
+
 //        while (cantidadManzanas != 0) {
         if (cantManzanas > 0) {
             int mapa = randomNumber(0, listaManzanas.size() - 1);
@@ -391,8 +409,6 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                                 listaManzanas2.remove(i);
                                 cantidadManzanasComidas++;
                                 manzanasComidasLabel.setText("" + cantidadManzanasComidas);
-
-                                //hiloPrincipal.stop();
                             }
                         }
                         colocarManzanas();
