@@ -13,7 +13,6 @@ import org.jpl7.Term;
  *
  * @author Danny Rojas Arguedas
  */
-
 public class GameFrame extends javax.swing.JFrame implements Runnable {
 
     public static ImageIcon block = new ImageIcon("src\\Images\\block.png");
@@ -21,6 +20,8 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
     public static ImageIcon apple = new ImageIcon("src\\Images\\apple.png");
     public static ImageIcon snakeHead = new ImageIcon("src\\Images\\snakeHead.png");
     public static ImageIcon snakeBody = new ImageIcon("src\\Images\\snakeBody.png");
+    public static ImageIcon cargando = new ImageIcon("src\\Images\\cargando.gif");
+    public static ImageIcon grayBrackground = new ImageIcon("src\\Images\\grayBrackground.JPG");
 
     Thread hiloPrincipal;
     public static boolean snakeVivo = false;
@@ -50,7 +51,6 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         colocarManzanas();
         manzanasComidasLabel.setText("" + cantidadManzanasComidas);
         JOptionPane.showMessageDialog(this, "Coloque la cabeza de la culebra en un espacio disponible.");
-
     }
 
     //metodo que realiza las conexiones
@@ -383,6 +383,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             //Boolean bandera = false;
             while (listaManzanas2.size() > 0) {
                 ruta();
+                cargandoLabel.setIcon(grayBrackground);
                 int xAnterior = -1;
                 int yAnterior = -1;
 
@@ -412,10 +413,12 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                             }
                         }
                         colocarManzanas();
+                        cargandoLabel.setIcon(cargando);
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException ex) {
                         }
+
                         soluciones.clear();
                     }
                     xAnterior = x;
@@ -472,12 +475,12 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         String t1 = "consult('Snake.pl')";
         Query q1 = new Query(t1);
         System.out.println("" + (q1.hasSolution() ? "Conectado" : "No conectado"));
-        String t2 = "respuesta(" + cabezaSnake + "," + manzana + ",X)";
+        String t2 = "rutaCorta(" + cabezaSnake + "," + manzana + ",Respuestas)";
         Query q2 = new Query(t2);
         Map<String, Term>[] solutions = q2.allSolutions();
 
         for (int i = 0; i < solutions.length; i++) {
-            Term term = solutions[i].get("X");
+            Term term = solutions[i].get("Respuestas");
             for (Term oneTerm : term.toTermArray()) {
                 soluciones.add(oneTerm.toString());
             }
@@ -495,6 +498,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         manzanasFaltantesLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         manzanasComidasLabel = new javax.swing.JLabel();
+        cargandoLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -543,19 +547,27 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(manzanasFaltantesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(28, 28, 28)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(manzanasComidasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(28, 28, 28))))
-                .addGap(35, 35, 35))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cargandoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 3, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(manzanasFaltantesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(28, 28, 28)))
+                                    .addComponent(jLabel2))
+                                .addGap(35, 35, 35))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(manzanasComidasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(219, 219, 219)
                 .addComponent(startButton)
@@ -577,8 +589,10 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                         .addComponent(manzanasFaltantesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(manzanasComidasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(manzanasComidasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)
+                        .addComponent(cargandoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startButton)
@@ -604,6 +618,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_salirButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel cargandoLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

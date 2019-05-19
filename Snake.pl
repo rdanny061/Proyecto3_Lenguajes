@@ -1,36 +1,44 @@
 :-dynamic(conexion/2).
 
+%------------------------------------------------------------------%
+%crea las conexiones entre los botones
 crearConexion(Inicio, Final):-
    assert(conexion(Inicio, Final)).
 
+%------------------------------------------------------------------%
+%muestra todas las conexiones
 verConexiones():- listing(conexion).
 
-respuesta(X,Y,Res):-
-   sol(X,Y,[],Aux),
-   menor(Aux,[],Var,100),
-   append(Var,[],Res).
+%------------------------------------------------------------------%
+%devuelve la ruta más corta
+rutaCorta(X,Y,Respuesta):-
+   solucionesTotales(X,Y,[],Auxiliar), menorRuta(Auxiliar,[],Var,20),
+   append(Var,[],Respuesta).
 
+%------------------------------------------------------------------%
+%saca rutas dado un inicio y un final
 ruta(X,X,L,R):-
    append(L,[X],R).
 
 
-ruta(I,F,RutaActual,LR):-
-   conexion(I,X),
-   not(member(X,RutaActual)),
-   append(RutaActual,[I],L2),
-   ruta(X,F, L2,LR).
+ruta(Inicio,Final,RutaActual,LR):-
+   conexion(Inicio,X), not(member(X,RutaActual)),
+   append(RutaActual,[Inicio],L2), ruta(X,Final, L2,LR).
 
-sol(X,Y,L,S):-
+%------------------------------------------------------------------%
+%saca todas las soluciones de ruta(todas las rutas)
+solucionesTotales(X,Y,L,S):-
    findall(R,ruta(X,Y,L,R),S).
 
-menor([],Aux,Res,_):- append(Aux,[],Res).
-menor([Cara|Cola],_,Res,Val):-
-   length(Cara,Sol),
-   Val >= Sol,
-   Val2 is Sol,
-   menor(Cola,Cara,Res,Val2),!.
-menor([Cara|Cola],Aux,Res,Val):-
-   length(Cara,Sol),
-   Val < Sol,
-   menor(Cola,Aux,Res,Val),!.
+%------------------------------------------------------------------%
+%calcula la ruta más corta
+menorRuta([],Auxiliar,Respuesta,_):- append(Auxiliar,[],Respuesta).
+
+menorRuta([Head|Tail],_,Respuesta,Valor1):-
+   length(Head,Solucion), Valor1 >= Solucion,
+   Valor2 is Solucion, menorRuta(Tail,Head,Respuesta,Valor2),!.
+
+menorRuta([Head|Tail],Aux,Res,Valor):-
+   length(Head,Solucion), Valor < Solucion,
+   menorRuta(Tail,Aux,Res,Valor),!.
 
