@@ -40,7 +40,8 @@ public class Cuadro extends JButton implements ActionListener, Serializable {
         if (snakeVivo == false) {
             if (!"Block".equals(this.tipo)) {
                 this.setIcon(snake);
-                JOptionPane.showMessageDialog(this, "(" + this.x + "," + this.y + ")\n Tipo: " + this.tipo);
+                JOptionPane.showMessageDialog(this, "Culebra colocada exitosamente en la posición: \n"
+                                                    + "(" + this.x + "," + this.y + ")");
                 snakeVivo = true;
                 cabezaSnake = this.nombre;
                 colaSnake = this.nombre;

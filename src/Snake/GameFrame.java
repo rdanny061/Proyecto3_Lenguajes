@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -36,7 +38,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
     ArrayList<Cuadro> listaManzanas2 = new ArrayList(); //lista de los botones donde hay manzanas
     public static ArrayList<Cuadro> listaPocisionesCulebra = new ArrayList();
 
-    List<String> solucionario = new ArrayList<>();
+    List<String> soluciones = new ArrayList<>();
 
     int cantManzanas; //cantidad de manzanas solicitadas por el usuario
 
@@ -364,8 +366,8 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                 int xAnterior = -1;
                 int yAnterior = -1;
 
-                for (int k = 0; k < solucionario.size(); k++) {
-                    String[] parts = solucionario.get(k).split(",");
+                for (int k = 0; k < soluciones.size(); k++) {
+                    String[] parts = soluciones.get(k).split(",");
                     int x = Integer.parseInt("" + parts[0].charAt(4));
                     int y = Integer.parseInt("" + parts[1].charAt(1));
 
@@ -375,8 +377,8 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                     pintarCuerpoCulebra();
 
                     cabezaSnake = botones[x][y].nombre;
-                    
-                    if (k + 1 == solucionario.size()) {
+
+                    if (k + 1 == soluciones.size()) {
                         xAnterior = -1;
                         yAnterior = -1;
                         System.out.println("meta");
@@ -390,7 +392,11 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                             }
                         }
                         colocarManzanas();
-                        solucionario.clear();
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ex) {
+                        }
+                        soluciones.clear();
                     }
                     xAnterior = x;
                     yAnterior = y;
@@ -404,6 +410,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             }
             JOptionPane.showMessageDialog(rootPane, "Juego terminado");
             hiloPrincipal.stop();
+
         }
     };
 
@@ -439,7 +446,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             Term term = solutions[i].get("X");
             for (Term oneTerm : term.toTermArray()) {
                 System.out.println("en Ruta: " + oneTerm.toString());
-                solucionario.add(oneTerm.toString());
+                soluciones.add(oneTerm.toString());
             }
         }
     }
@@ -450,8 +457,10 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
 
         jPanel1 = new javax.swing.JPanel();
         startButton = new javax.swing.JButton();
+        salirButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -464,10 +473,19 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             .addGap(0, 499, Short.MAX_VALUE)
         );
 
+        startButton.setBackground(new java.awt.Color(51, 204, 0));
         startButton.setText("Iniciar");
         startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startButtonActionPerformed(evt);
+            }
+        });
+
+        salirButton.setBackground(new java.awt.Color(204, 0, 0));
+        salirButton.setText("Salir");
+        salirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirButtonActionPerformed(evt);
             }
         });
 
@@ -476,14 +494,15 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(215, 215, 215)
-                        .addComponent(startButton)))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(startButton)
+                .addGap(134, 134, 134)
+                .addComponent(salirButton)
+                .addGap(121, 121, 121))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -491,7 +510,9 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(startButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(startButton)
+                    .addComponent(salirButton))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -508,8 +529,13 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_startButtonActionPerformed
 
+    private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_salirButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton salirButton;
     private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 
