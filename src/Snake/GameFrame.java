@@ -18,7 +18,8 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
     public static ImageIcon block = new ImageIcon("src\\Images\\block.png");
     public static ImageIcon path = new ImageIcon("src\\Images\\path.png");
     public static ImageIcon apple = new ImageIcon("src\\Images\\apple.png");
-    public static ImageIcon snake = new ImageIcon("src\\Images\\snake.png");
+    public static ImageIcon snakeHead = new ImageIcon("src\\Images\\snakeHead.png");
+    public static ImageIcon snakeBody = new ImageIcon("src\\Images\\snakeBody.png");
 
     Thread hiloPrincipal;
     public static boolean snakeVivo = false;
@@ -206,7 +207,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                 }
             }
         }
-        
+
         ArrayList<Cuadro> listaPocisionesCuerpoCulebra;
 
         if (!listaPocisionesCulebra.isEmpty()) { //esto hará que la manzana no caiga encima del cuerpo de la culebra
@@ -263,7 +264,6 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             for (int columna = 0; columna < 6; columna++) {
                 botones[fila][columna] = new Cuadro(80 * columna, 80 * fila, 80, 80, fila, columna);
                 botones[fila][columna].setIcon(path);
-                //botones[fila][columna].nombre(fila, columna);
                 jPanel1.add(botones[fila][columna]);
             }
         }
@@ -443,11 +443,25 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                 }
             }
         }
+        ArrayList<Cuadro> listaPocisionesCuerpoCulebra = new ArrayList();
         Collections.reverse(listaPocisionesCulebra);
         for (int i = 0; i <= cantidadManzanasComidas; i++) {
-            botones[listaPocisionesCulebra.get(i).x][listaPocisionesCulebra.get(i).y].setIcon(snake);
+            listaPocisionesCuerpoCulebra.add(listaPocisionesCulebra.get(i));
+            //botones[listaPocisionesCulebra.get(i).x][listaPocisionesCulebra.get(i).y].setIcon(snake);
         }
         Collections.reverse(listaPocisionesCulebra);
+
+        Collections.reverse(listaPocisionesCuerpoCulebra);
+        for (int i = 0; i < listaPocisionesCuerpoCulebra.size(); i++) {
+            if (i + 1 == listaPocisionesCuerpoCulebra.size()) {
+                botones[listaPocisionesCuerpoCulebra.get(i).x][listaPocisionesCuerpoCulebra.get(i).y].setIcon(snakeHead);
+            } else {
+                botones[listaPocisionesCuerpoCulebra.get(i).x][listaPocisionesCuerpoCulebra.get(i).y].setIcon(snakeBody);
+
+            }
+        }
+        Collections.reverse(listaPocisionesCuerpoCulebra);
+
     }
 
     public void ruta() {

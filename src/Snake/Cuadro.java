@@ -1,7 +1,7 @@
 package Snake;
 
 import static Snake.GameFrame.snakeVivo;
-import static Snake.GameFrame.snake;
+import static Snake.GameFrame.snakeHead;
 import static Snake.GameFrame.cabezaSnake;
 import static Snake.GameFrame.colaSnake;
 import static Snake.GameFrame.listaPocisionesCulebra;
@@ -39,7 +39,7 @@ public class Cuadro extends JButton implements ActionListener, Serializable {
     public void actionPerformed(ActionEvent ae) {
         if (snakeVivo == false) {
             if (!"Block".equals(this.tipo)) {
-                this.setIcon(snake);
+                this.setIcon(snakeHead);
                 JOptionPane.showMessageDialog(this, "Culebra colocada exitosamente en la posición: \n"
                                                     + "(" + this.x + "," + this.y + ")");
                 snakeVivo = true;
