@@ -51,6 +51,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         cantManzanas = cantManzanas2;
         colocarManzanas();
         //verBlocks();
+        manzanasComidasLabel.setText("" + cantidadManzanasComidas);
     }
 
     //metodo que realiza las conexiones
@@ -203,6 +204,7 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
     //metodo que coloca las n manzanas en el mapa
     public void colocarManzanas() {
         System.out.println("Manzs: " + cantManzanas);
+        manzanasFaltantesLabel.setText("" + cantManzanas);
         for (int fila = 0; fila < 6; fila++) {
             for (int columna = 0; columna < 6; columna++) {
                 if (botones[fila][columna].tipo == null) {
@@ -388,6 +390,8 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
                             if (listaManzanas2.get(i).x == x && listaManzanas2.get(i).y == y) {
                                 listaManzanas2.remove(i);
                                 cantidadManzanasComidas++;
+                                manzanasComidasLabel.setText("" + cantidadManzanasComidas);
+
                                 //hiloPrincipal.stop();
                             }
                         }
@@ -458,6 +462,10 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
         jPanel1 = new javax.swing.JPanel();
         startButton = new javax.swing.JButton();
         salirButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        manzanasFaltantesLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        manzanasComidasLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -489,31 +497,64 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Manzanas Faltantes:");
+
+        manzanasFaltantesLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Manzanas Comidas:");
+
+        manzanasComidasLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(manzanasFaltantesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(28, 28, 28)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(manzanasComidasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(28, 28, 28))))
+                .addGap(35, 35, 35))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(219, 219, 219)
                 .addComponent(startButton)
-                .addGap(134, 134, 134)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(salirButton)
-                .addGap(121, 121, 121))
+                .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(manzanasFaltantesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(manzanasComidasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startButton)
                     .addComponent(salirButton))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -534,7 +575,11 @@ public class GameFrame extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_salirButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel manzanasComidasLabel;
+    private javax.swing.JLabel manzanasFaltantesLabel;
     private javax.swing.JButton salirButton;
     private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
