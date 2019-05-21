@@ -41,4 +41,3 @@ menorRuta([Head|Tail],_,Respuesta,Valor1):-
 menorRuta([Head|Tail],Aux,Res,Valor):-
    length(Head,Solucion), Valor < Solucion,
    menorRuta(Tail,Aux,Res,Valor),!.
-
